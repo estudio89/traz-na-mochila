@@ -1,3 +1,7 @@
+"""
+Model classes
+"""
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -10,11 +14,11 @@ class UserProfile(models.Model):
 	longitude = models.FloatField()
 
 class Trip(models.Model):
-	traveler = models.OneToOneField(User)
+	traveler = models.ForeignKey(User)
 	trip_to = models.ForeignKey('main.Country')
 	departure_date = models.DateField()
 	return_date = models.DateField()
-	observation = models.TextField()
+	info = models.TextField()
 
 class City(models.Model):
 	name = models.CharField(max_length=100)
