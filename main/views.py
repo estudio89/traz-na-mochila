@@ -4,7 +4,8 @@ Views
 
 from django.shortcuts import render, render_to_response, get_object_or_404
 from django.template import RequestContext
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
+from django.contrib import auth
 from rest_framework.renderers import JSONRenderer
 from main.models import *
 from main.serializers import *
@@ -33,8 +34,12 @@ def trip(request, trip_id=None):
     elif request.method == 'DELETE':
         # Delete a particular trip
         trip = get_object_or_404(Trip, pk=trip_id)
-        trip.delete()
-        json = "{'return':'OK'}"
+        # Check if request.user is the trip's traveler
+        if trip.traveler == request.user:
+            trip.delete()
+            json = "{'return':'OK'}"
+        else:
+            json = "{'return':'ERROR'}"
     else:
         json = 'NONE'
 
@@ -47,3 +52,7 @@ def message(request, receiver_id):
 
 def contact(request):
     return render_to_response('base.html', {'test':'contact'}, context_instance=RequestContext(request))
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect("/")

@@ -10,4 +10,8 @@ urlpatterns = patterns('main.views',
     url(r'^message/(?P<receiver_id>\d+)/$', 'message'),
     #----------Contact----------
     url(r'^contact/$', 'contact'),
+    #----------Python social auth----------
+    url('', include('social.apps.django_app.urls', namespace='social')),
+    #----------Contact----------
+    url(r'^logout/$', 'logout'),
 )

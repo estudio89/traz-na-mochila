@@ -38,6 +38,17 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'main',
     'rest_framework',
+    'social.apps.django_app.default',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'social.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    'django.core.context_processors.request',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -49,6 +60,25 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.mail.mail_validation',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
+)
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1537952826455803'
+SOCIAL_AUTH_FACEBOOK_SECRET = '57a30eb4bec2eedfb9158737d5c948bd'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+LOGIN_REDIRECT_URL = '/'
 
 ROOT_URLCONF = 'traznamochila.urls'
 
